@@ -25,6 +25,7 @@ export function App() {
           <Route path="/login">
             <LoginPage />
           </Route>
+
           <Route path="/form">
             <FormPage />
           </Route>
