@@ -12,7 +12,7 @@ import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import { useState } from "react";
-import { isEmail } from "./Utils";
+import { isEmail, validatePassword } from "./Utils";
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -65,8 +65,8 @@ function LoginSection() {
             autoFocus
             value={state.email}
             onChange={event => setState({...state, email: event.target.value})}
-            error={isEmail(state.email)}
-            helperText={isEmail(state.email)?"This must be in a valid email format":''}
+            error={isEmail(state.email).error}
+            helperText={isEmail(state.email).msg}
           />
           <TextField
             variant="outlined"
@@ -105,6 +105,7 @@ function LoginSection() {
 
 function RegisterSection() {
   const classes = useStyles();
+  const [state, setState] = useState({email:'', firstName:'', lastName:'', password:''})
   return (
     <div className={classes.registerSection}>
     <Container component="main" maxWidth="xs">
@@ -147,6 +148,10 @@ function RegisterSection() {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={state.email}
+                onChange={event => setState({...state, email: event.target.value})}
+                error={isEmail(state.email).error}
+                helperText={isEmail(state.email).msg}    
               />
             </Grid>
             <Grid item xs={12}>
@@ -159,6 +164,9 @@ function RegisterSection() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={event => setState({...state, password: event.target.value})}
+                error={validatePassword(state.password).error}
+                helperText={validatePassword(state.password).msg}    
               />
             </Grid>
             <Grid item xs={12}>
