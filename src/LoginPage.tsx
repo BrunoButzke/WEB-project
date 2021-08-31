@@ -41,8 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 function LoginSection() {
   const classes = useStyles();
-  const [state, setState] = useState({email:'', password:''})
-
+  const [state, setState] = useState({email:'', emailValidate:{error:false, msg:''}});
 
   return (
     <div className={classes.loginSection}>
@@ -65,8 +64,9 @@ function LoginSection() {
             autoFocus
             value={state.email}
             onChange={event => setState({...state, email: event.target.value})}
-            error={isEmail(state.email).error}
-            helperText={isEmail(state.email).msg}
+            error={state.emailValidate.error}
+            helperText={state.emailValidate.msg} 
+            onBlur={() => setState({...state, emailValidate:isEmail(state.email)})}   
           />
           <TextField
             variant="outlined"
@@ -105,7 +105,13 @@ function LoginSection() {
 
 function RegisterSection() {
   const classes = useStyles();
-  const [state, setState] = useState({email:'', firstName:'', lastName:'', password:''})
+  const [state, setState] = useState({ 
+    email:'', 
+    password:'', 
+    emailValidate:{error:false, msg:''}, 
+    passwordValidate:{error:false, msg:''}
+  });
+
   return (
     <div className={classes.registerSection}>
     <Container component="main" maxWidth="xs">
@@ -114,7 +120,7 @@ function RegisterSection() {
         <Typography component="h1" variant="h5">
           Register
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form}>
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -150,8 +156,9 @@ function RegisterSection() {
                 autoComplete="email"
                 value={state.email}
                 onChange={event => setState({...state, email: event.target.value})}
-                error={isEmail(state.email).error}
-                helperText={isEmail(state.email).msg}    
+                error={state.emailValidate.error}
+                helperText={state.emailValidate.msg} 
+                onBlur={() => setState({...state, emailValidate:isEmail(state.email) })}   
               />
             </Grid>
             <Grid item xs={12}>
@@ -165,13 +172,14 @@ function RegisterSection() {
                 id="password"
                 autoComplete="current-password"
                 onChange={event => setState({...state, password: event.target.value})}
-                error={validatePassword(state.password).error}
-                helperText={validatePassword(state.password).msg}    
+                error={state.passwordValidate.error}
+                helperText={state.passwordValidate.msg}    
+                onBlur={() => setState({...state, passwordValidate:validatePassword(state.password)})}
               />
             </Grid>
             <Grid item xs={12}>
               <FormLabel component="legend">User type?</FormLabel>
-              <RadioGroup row aria-label="user type" name="user type">
+              <RadioGroup aria-required row aria-label="user type" name="user type">
                 <FormControlLabel
                   value="student"
                   control={<Radio />}

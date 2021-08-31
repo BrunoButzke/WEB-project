@@ -1,3 +1,8 @@
+interface IValidateField {
+    error: boolean;
+    msg: string;
+}
+
 export function isEmail(email:string): IValidateField {
     const error = !!email.search(
         /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -7,11 +12,6 @@ export function isEmail(email:string): IValidateField {
         msg = 'This must be in a valid email format'
     }
     return {msg, error}
-}
-
-interface IValidateField {
-    error: boolean;
-    msg: string;
 }
 
 export function validatePassword(password:string) : IValidateField {
@@ -39,5 +39,4 @@ export function validatePassword(password:string) : IValidateField {
         errors.forEach(e => msg += "\n" + e + ";");
     }
     return {msg, error}
-    
 }
