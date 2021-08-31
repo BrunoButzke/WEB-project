@@ -11,6 +11,8 @@ import RadioGroup from "@material-ui/core/RadioGroup";
 import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
+import { useState } from "react";
+import { isEmail } from "./Utils";
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -39,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 export function LoginPage() {
   const classes = useStyles();
+  const [state, setState] = useState({email:'', password:''})
 
   return (
     <div className={classes.page}>
@@ -49,7 +52,7 @@ export function LoginPage() {
             <Typography component="h1" variant="h5">
               Login
             </Typography>
-            <form className={classes.form} noValidate>
+            <form className={classes.form}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -60,6 +63,10 @@ export function LoginPage() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                value={state.email}
+                onChange={event => setState({...state, email: event.target.value})}
+                error={isEmail(state.email)}
+                helperText={isEmail(state.email)?"This must be in a valid email format":''}
               />
               <TextField
                 variant="outlined"
