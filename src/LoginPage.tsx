@@ -12,7 +12,7 @@ import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import { useState } from "react";
-import { isEmail, validatePassword } from "./Utils";
+import { validateEmail, validatePassword } from "./Utils";
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
 
 function LoginSection() {
   const classes = useStyles();
-  const [state, setState] = useState({email:'', emailValidate:{error:false, msg:''}});
+  const [state, setState] = useState({email:'', validateEmail:{error:false, msg:''}});
 
   return (
     <div className={classes.loginSection}>
@@ -64,9 +64,9 @@ function LoginSection() {
             autoFocus
             value={state.email}
             onChange={event => setState({...state, email: event.target.value})}
-            error={state.emailValidate.error}
-            helperText={state.emailValidate.msg} 
-            onBlur={() => setState({...state, emailValidate:isEmail(state.email)})}   
+            error={state.validateEmail.error}
+            helperText={state.validateEmail.msg} 
+            onBlur={() => setState({...state, validateEmail:validateEmail(state.email)})}   
           />
           <TextField
             variant="outlined"
@@ -108,8 +108,8 @@ function RegisterSection() {
   const [state, setState] = useState({ 
     email:'', 
     password:'', 
-    emailValidate:{error:false, msg:''}, 
-    passwordValidate:{error:false, msg:''}
+    validateEmail:{error:false, msg:''}, 
+    validatePassword:{error:false, msg:''}
   });
 
   return (
@@ -156,9 +156,9 @@ function RegisterSection() {
                 autoComplete="email"
                 value={state.email}
                 onChange={event => setState({...state, email: event.target.value})}
-                error={state.emailValidate.error}
-                helperText={state.emailValidate.msg} 
-                onBlur={() => setState({...state, emailValidate:isEmail(state.email) })}   
+                error={state.validateEmail.error}
+                helperText={state.validateEmail.msg} 
+                onBlur={() => setState({...state, validateEmail:validateEmail(state.email) })}   
               />
             </Grid>
             <Grid item xs={12}>
@@ -172,9 +172,9 @@ function RegisterSection() {
                 id="password"
                 autoComplete="current-password"
                 onChange={event => setState({...state, password: event.target.value})}
-                error={state.passwordValidate.error}
-                helperText={state.passwordValidate.msg}    
-                onBlur={() => setState({...state, passwordValidate:validatePassword(state.password)})}
+                error={state.validatePassword.error}
+                helperText={state.validatePassword.msg}    
+                onBlur={() => setState({...state, validatePassword:validatePassword(state.password)})}
               />
             </Grid>
             <Grid item xs={12}>

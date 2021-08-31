@@ -3,7 +3,7 @@ interface IValidateField {
     msg: string;
 }
 
-export function isEmail(email:string): IValidateField {
+export function validateEmail(email:string): IValidateField {
     const error = !!email.search(
         /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     )
