@@ -39,38 +39,119 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function LoginPage() {
+function LoginSection() {
   const classes = useStyles();
   const [state, setState] = useState({email:'', password:''})
 
+
   return (
-    <div className={classes.page}>
-      <div className={classes.loginSection}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div className={classes.paper}>
-            <Typography component="h1" variant="h5">
-              Login
-            </Typography>
-            <form className={classes.form}>
+    <div className={classes.loginSection}>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
+        <form className={classes.form}>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            id="email"
+            label="Email Address"
+            name="email"
+            autoComplete="email"
+            autoFocus
+            value={state.email}
+            onChange={event => setState({...state, email: event.target.value})}
+            error={isEmail(state.email)}
+            helperText={isEmail(state.email)?"This must be in a valid email format":''}
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Login
+          </Button>
+          <Grid container>
+            <Grid item xs>
+              <Link href="#" variant="body2">
+                Forgot password?
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+    </Container>
+    </div>
+  );
+}
+
+
+function RegisterSection() {
+  const classes = useStyles();
+  return (
+    <div className={classes.registerSection}>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className={classes.paper}>
+        <Typography component="h1" variant="h5">
+          Register
+        </Typography>
+        <form className={classes.form} noValidate>
+          <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                autoComplete="fname"
+                name="firstName"
+                variant="outlined"
+                required
+                fullWidth
+                id="firstName"
+                label="First Name"
+                autoFocus
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
               <TextField
                 variant="outlined"
-                margin="normal"
+                required
+                fullWidth
+                id="lastName"
+                label="Last Name"
+                name="lastName"
+                autoComplete="lname"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
                 required
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
-                value={state.email}
-                onChange={event => setState({...state, email: event.target.value})}
-                error={isEmail(state.email)}
-                helperText={isEmail(state.email)?"This must be in a valid email format":''}
               />
+            </Grid>
+            <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                margin="normal"
                 required
                 fullWidth
                 name="password"
@@ -79,110 +160,46 @@ export function LoginPage() {
                 id="password"
                 autoComplete="current-password"
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Login
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
-                  </Link>
-                </Grid>
-              </Grid>
-            </form>
-          </div>
-        </Container>
+            </Grid>
+            <Grid item xs={12}>
+              <FormLabel component="legend">User type?</FormLabel>
+              <RadioGroup row aria-label="user type" name="user type">
+                <FormControlLabel
+                  value="student"
+                  control={<Radio />}
+                  label="Student"
+                />
+                <FormControlLabel
+                  value="Company"
+                  control={<Radio />}
+                  label="Company"
+                />
+              </RadioGroup>
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+          >
+            Register
+          </Button>
+        </form>
       </div>
-      <div className={classes.registerSection}>
-        <Container component="main" maxWidth="xs">
-          <CssBaseline />
-          <div className={classes.paper}>
-            <Typography component="h1" variant="h5">
-              Register
-            </Typography>
-            <form className={classes.form} noValidate>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    autoComplete="fname"
-                    name="firstName"
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="firstName"
-                    label="First Name"
-                    autoFocus
-                  />
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="lastName"
-                    label="Last Name"
-                    name="lastName"
-                    autoComplete="lname"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="email"
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <FormLabel component="legend">User type?</FormLabel>
-                  <RadioGroup row aria-label="user type" name="user type">
-                    <FormControlLabel
-                      value="student"
-                      control={<Radio />}
-                      label="Student"
-                    />
-                    <FormControlLabel
-                      value="Company"
-                      control={<Radio />}
-                      label="Company"
-                    />
-                  </RadioGroup>
-                </Grid>
-              </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Register
-              </Button>
-            </form>
-          </div>
-        </Container>
-      </div>
+    </Container>
+    </div>
+  )
+}
+
+export function LoginPage() {
+  const classes = useStyles();
+
+  return (
+    <div className={classes.page}>
+      <LoginSection/>
+      <RegisterSection/>
     </div>
   );
 }
