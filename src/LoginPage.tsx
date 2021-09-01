@@ -17,7 +17,7 @@ import { validateEmail, validatePassword } from "./Utils";
 const useStyles = makeStyles((theme) => ({
   page: {
     display: "block",
-    [theme.breakpoints.up("sm")]: {
+    [theme.breakpoints.up("lg")]: {
       display: "flex",
     },
   },
