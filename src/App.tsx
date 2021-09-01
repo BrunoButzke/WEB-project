@@ -1,33 +1,25 @@
 import * as React from "react";
-import { HashRouter, Switch, Route, Link } from "react-router-dom";
+import { HashRouter, Switch, Route } from "react-router-dom";
 import { FormPage } from "./FormPage";
 import { HomePage } from "./HomePage";
 import { LoginPage } from "./LoginPage";
+import NavigationBar from "./NavigationBar";
+import { PostPage } from "./PostPage";
 
 export function App() {
   return (
     <HashRouter>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/form">Form</Link>
-            </li>
-          </ul>
-        </nav>
+        <NavigationBar />
         <Switch>
           <Route path="/login">
             <LoginPage />
           </Route>
-
           <Route path="/form">
             <FormPage />
+          </Route>
+          <Route path="/post">
+            <PostPage />
           </Route>
           <Route path="/">
             <HomePage />

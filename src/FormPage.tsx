@@ -51,8 +51,8 @@ export function FormPage() {
             required
             fullWidth
             multiline
-            rows={2}
-            rowsMax={20}
+            minRows={2}
+            maxRows={20}
             name="Description"
             label="Description"
             type="text"

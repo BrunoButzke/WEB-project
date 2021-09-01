@@ -16,7 +16,10 @@ import { validateEmail, validatePassword } from "./Utils";
 
 const useStyles = makeStyles((theme) => ({
   page: {
-    display: "flex",
+    display: "block",
+    [theme.breakpoints.up("sm")]: {
+      display: "flex",
+    },
   },
   loginSection: {
     marginLeft: "auto",
@@ -41,172 +44,200 @@ const useStyles = makeStyles((theme) => ({
 
 function LoginSection() {
   const classes = useStyles();
-  const [state, setState] = useState({email:'', validateEmail:{error:false, msg:''}});
+  const [state, setState] = useState({
+    email: "",
+    validateEmail: { error: false, msg: "" },
+  });
 
   return (
     <div className={classes.loginSection}>
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
-        <form className={classes.form}>
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            id="email"
-            label="Email Address"
-            name="email"
-            autoComplete="email"
-            autoFocus
-            value={state.email}
-            onChange={event => setState({...state, email: event.target.value})}
-            error={state.validateEmail.error}
-            helperText={state.validateEmail.msg} 
-            onBlur={() => setState({...state, validateEmail:validateEmail(state.email)})}   
-          />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
             Login
-          </Button>
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+          </Typography>
+          <form className={classes.form}>
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+              value={state.email}
+              onChange={(event) =>
+                setState({ ...state, email: event.target.value })
+              }
+              error={state.validateEmail.error}
+              helperText={state.validateEmail.msg}
+              onBlur={() =>
+                setState({
+                  ...state,
+                  validateEmail: validateEmail(state.email),
+                })
+              }
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Login
+            </Button>
+            <Grid container>
+              <Grid item xs>
+                <Link href="#" variant="body2">
+                  Forgot password?
+                </Link>
+              </Grid>
             </Grid>
-          </Grid>
-        </form>
-      </div>
-    </Container>
+          </form>
+        </div>
+      </Container>
     </div>
   );
 }
 
-
 function RegisterSection() {
   const classes = useStyles();
-  const [state, setState] = useState({ 
-    email:'', 
-    password:'', 
-    validateEmail:{error:false, msg:''}, 
-    validatePassword:{error:false, msg:''}
+  const [state, setState] = useState({
+    email: "",
+    password: "",
+    validateEmail: { error: false, msg: "" },
+    validatePassword: { error: false, msg: "" },
   });
 
   return (
     <div className={classes.registerSection}>
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <div className={classes.paper}>
-        <Typography component="h1" variant="h5">
-          Register
-        </Typography>
-        <form className={classes.form}>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                autoComplete="fname"
-                name="firstName"
-                variant="outlined"
-                required
-                fullWidth
-                id="firstName"
-                label="First Name"
-                autoFocus
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="lastName"
-                label="Last Name"
-                name="lastName"
-                autoComplete="lname"
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                value={state.email}
-                onChange={event => setState({...state, email: event.target.value})}
-                error={state.validateEmail.error}
-                helperText={state.validateEmail.msg} 
-                onBlur={() => setState({...state, validateEmail:validateEmail(state.email) })}   
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                variant="outlined"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-                onChange={event => setState({...state, password: event.target.value})}
-                error={state.validatePassword.error}
-                helperText={state.validatePassword.msg}    
-                onBlur={() => setState({...state, validatePassword:validatePassword(state.password)})}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <FormLabel component="legend">User type?</FormLabel>
-              <RadioGroup aria-required row aria-label="user type" name="user type">
-                <FormControlLabel
-                  value="student"
-                  control={<Radio />}
-                  label="Student"
-                />
-                <FormControlLabel
-                  value="Company"
-                  control={<Radio />}
-                  label="Company"
-                />
-              </RadioGroup>
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            color="primary"
-            className={classes.submit}
-          >
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>
+          <Typography component="h1" variant="h5">
             Register
-          </Button>
-        </form>
-      </div>
-    </Container>
+          </Typography>
+          <form className={classes.form}>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  autoComplete="fname"
+                  name="firstName"
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="firstName"
+                  label="First Name"
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="lastName"
+                  label="Last Name"
+                  name="lastName"
+                  autoComplete="lname"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  id="email"
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                  value={state.email}
+                  onChange={(event) =>
+                    setState({ ...state, email: event.target.value })
+                  }
+                  error={state.validateEmail.error}
+                  helperText={state.validateEmail.msg}
+                  onBlur={() =>
+                    setState({
+                      ...state,
+                      validateEmail: validateEmail(state.email),
+                    })
+                  }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                  onChange={(event) =>
+                    setState({ ...state, password: event.target.value })
+                  }
+                  error={state.validatePassword.error}
+                  helperText={state.validatePassword.msg}
+                  onBlur={() =>
+                    setState({
+                      ...state,
+                      validatePassword: validatePassword(state.password),
+                    })
+                  }
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <FormLabel component="legend">User type?</FormLabel>
+                <RadioGroup
+                  aria-required
+                  row
+                  aria-label="user type"
+                  name="user type"
+                >
+                  <FormControlLabel
+                    value="student"
+                    control={<Radio />}
+                    label="Student"
+                  />
+                  <FormControlLabel
+                    value="Company"
+                    control={<Radio />}
+                    label="Company"
+                  />
+                </RadioGroup>
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Register
+            </Button>
+          </form>
+        </div>
+      </Container>
     </div>
-  )
+  );
 }
 
 export function LoginPage() {
@@ -214,8 +245,8 @@ export function LoginPage() {
 
   return (
     <div className={classes.page}>
-      <LoginSection/>
-      <RegisterSection/>
+      <LoginSection />
+      <RegisterSection />
     </div>
   );
 }
