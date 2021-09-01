@@ -6,6 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -25,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
 
 export function FormPage() {
   const classes = useStyles();
+  const [title, setTitle] = React.useState<string>();
+  const [description, setDescription] = React.useState<string>();
+  const history = useHistory();
 
   return (
     <Container component="main" maxWidth="xs">
@@ -33,7 +37,13 @@ export function FormPage() {
         <Typography component="h1" variant="h5">
           Make a post about yourself!
         </Typography>
-        <form className={classes.form} noValidate>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={() => {
+            history.push(`/?title=${title}&description=${description}`);
+          }}
+        >
           <TextField
             variant="outlined"
             margin="normal"
@@ -44,6 +54,8 @@ export function FormPage() {
             name="title"
             autoComplete="title"
             autoFocus
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
           <TextField
             variant="outlined"
@@ -53,11 +65,13 @@ export function FormPage() {
             multiline
             minRows={2}
             maxRows={20}
-            name="Description"
+            name="description"
             label="Description"
             type="text"
             id="description"
             autoComplete="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
 
           <Grid container>

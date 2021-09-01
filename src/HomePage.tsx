@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createStyles, Theme, makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import List from "@material-ui/core/List";
@@ -9,7 +9,7 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,6 +27,12 @@ const useStyles = makeStyles((theme: Theme) =>
 export function HomePage() {
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
+
+  const newEntry = React.useMemo(
+    () => new URLSearchParams(location.search)?.get("title"),
+    [location]
+  );
 
   return (
     <Container component="main">
@@ -35,10 +41,10 @@ export function HomePage() {
         <div onClick={() => history.push("/post?id=1")}>
           <ListItem alignItems="flex-start">
             <ListItemAvatar>
-              <Avatar alt="Bruno" />
+              <Avatar alt="Guilherme" />
             </ListItemAvatar>
             <ListItemText
-              primary="Aluno de Sistemas da Informação"
+              primary="Aluno da UFSC"
               secondary={
                 <React.Fragment>
                   <Typography
@@ -47,7 +53,7 @@ export function HomePage() {
                     className={classes.inline}
                     color="textPrimary"
                   >
-                    Bruno
+                    Guilherme
                   </Typography>
                 </React.Fragment>
               }
@@ -100,6 +106,31 @@ export function HomePage() {
             />
           </ListItem>
         </div>
+        <Divider variant="inset" component="li" />
+        {newEntry && (
+          <div onClick={() => history.push("/post?id=4")}>
+            <ListItem alignItems="flex-start">
+              <ListItemAvatar>
+                <Avatar alt="novo" />
+              </ListItemAvatar>
+              <ListItemText
+                primary={newEntry}
+                secondary={
+                  <React.Fragment>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      className={classes.inline}
+                      color="textPrimary"
+                    >
+                      {'<username>'}
+                    </Typography>
+                  </React.Fragment>
+                }
+              />
+            </ListItem>
+          </div>
+        )}
       </List>
     </Container>
   );

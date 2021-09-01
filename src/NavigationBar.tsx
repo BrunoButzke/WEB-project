@@ -38,24 +38,19 @@ export default function NavigationBar() {
   const open = Boolean(anchorEl);
   const [isDrawerOpen, setDrawerOpen] = React.useState<boolean>(false);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setAuth(event.target.checked);
-  };
+  const handleMenu = React.useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorEl(event.currentTarget);
+    },
+    []
+  );
 
-  const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
+  const handleClose = React.useCallback(() => {
     setAnchorEl(null);
-  };
+  }, []);
 
   const location = useLocation();
   const history = useHistory();
-
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
 
   return (
     <div className={classes.root}>

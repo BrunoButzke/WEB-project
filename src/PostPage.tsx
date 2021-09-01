@@ -40,8 +40,8 @@ export function PostPage() {
       case "1":
         return (
           <PostCard
-            title={"Aluno de Sistemas da Informação"}
-            username={"Bruno"}
+            title={"Aluno da UFSC"}
+            username={"Guilherme"}
             description={`Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's standard dummy text
         ever since the 1500s, when an unknown printer took a galley of type
