@@ -37,3 +37,7 @@ export function validatePassword(password: string): IValidateField {
   }
   return { msg, error };
 }
+
+export const config = {
+  API_URL: "http://localhost:1337",
+};

@@ -12,7 +12,8 @@ import Radio from "@material-ui/core/Radio";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormLabel from "@material-ui/core/FormLabel";
 import { useState } from "react";
-import { validateEmail, validatePassword } from "./Utils";
+import { validateEmail, validatePassword, config } from "./Utils";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -116,13 +117,41 @@ function LoginSection() {
 }
 
 function RegisterSection() {
+  const history = useHistory();
   const classes = useStyles();
   const [state, setState] = useState({
     email: "",
     password: "",
+    firstName: "",
+    lastName: "",
     validateEmail: { error: false, msg: "" },
     validatePassword: { error: false, msg: "" },
   });
+
+  const handleRegister = async (evt: any) => {
+    evt.preventDefault();
+    const { email, password, firstName, lastName } = state;
+
+    const options = {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password, firstName, lastName }),
+    };
+
+    const request = await fetch(`${config.API_URL}/signup`, options);
+
+    if (request.status !== 201) {
+      alert("An error occurred!");
+      return false;
+    }
+
+    const { token } = await request.json();
+    localStorage.setItem("token", token);
+    history.push("/profile");
+  };
 
   return (
     <div className={classes.registerSection}>
@@ -132,7 +161,7 @@ function RegisterSection() {
           <Typography component="h1" variant="h5">
             Register
           </Typography>
-          <form className={classes.form}>
+          <form className={classes.form} onSubmit={handleRegister}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -144,6 +173,10 @@ function RegisterSection() {
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  value={state.firstName}
+                  onChange={(event) =>
+                    setState({ ...state, firstName: event.target.value })
+                  }
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -155,6 +188,10 @@ function RegisterSection() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="lname"
+                  value={state.lastName}
+                  onChange={(event) =>
+                    setState({ ...state, lastName: event.target.value })
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
